@@ -1,255 +1,275 @@
 # Chapter 6 — Applications of Integration
 
-## 6.1 Opening: How much wine the bottle holds
+*What to do once you know how to add up infinitely many infinitely thin things.*
 
-A wine bottle isn't a cylinder. It has a flared base, tapering neck, curved shoulder. The volume isn't $\pi r^2 h$. The bottle is a *solid of revolution* — a shape produced by spinning a curve around an axis — and computing its volume requires the slicing-and-integrating logic that integration was designed for.
+---
 
-Imagine slicing the bottle horizontally into very thin disks. Each disk is approximately a cylinder, with radius equal to the bottle's profile at that height and thickness $dy$. The volume of one disk is $\pi r(y)^2 \, dy$, where $r(y)$ is the radius at height $y$. The total volume is the sum of all such disks — which, as the disk thickness shrinks to zero, becomes the integral
+## A single question
+
+Here is the question this chapter answers: if you can integrate, what can you actually compute?
+
+The answer turns out to be an embarrassingly long list. Area. Volume. The length of a curve. The work done by a force that changes as you push. The energy required to lift every drop of water out of a tank. The center of mass of an irregular object. The expected value of a continuous random variable. All of these are integrals. The chapter is about learning to see them that way.
+
+But rather than start with the list, let's start with a single object that forces all the ideas to the surface: a wine bottle.
+
+A wine bottle is not a cylinder. It has a flared base, a curved shoulder, a tapering neck. You cannot compute its interior volume with $\pi r^2 h$. There is no single radius. There is a *profile* — a curve $r(y)$ that gives the bottle's radius at each height $y$. To find the volume, you have to add up the contributions from every horizontal slice of the bottle, from the bottom to the top.
+
+Each horizontal slice is approximately a disk. A thin disk at height $y$ has radius $r(y)$, thickness $dy$, and volume $\pi [r(y)]^2 \, dy$. Add them all up — that is, integrate — and you have the total interior volume:
 
 $$V = \int_a^b \pi [r(y)]^2 \, dy$$
 
-This is the *disk method*. The same reasoning — slice into infinitesimal pieces, identify each piece's volume, integrate — handles nearly every accumulated quantity in physics and engineering. Areas between curves. Volumes of solids of revolution. Lengths of curves. Surface areas. Work done by a variable force. Hydrostatic pressure on a submerged surface. The total mass of an object with non-uniform density. The center of mass. The expected value of a random variable in continuous probability. Each is a definite integral, set up by the same structural pattern: slice, identify the contribution, integrate.
+<!-- → INFOGRAPHIC: cutaway diagram of a wine bottle with a horizontal slice at height y highlighted — one thin disk pulled out to the side showing its radius r(y) and thickness dy labeled, with the volume element π[r(y)]²dy written next to it. The full stack of disks should be visible inside the bottle silhouette, conveying the accumulation idea before any formula is written. -->
 
-By the end of this chapter, you should be able to:
+This is not a special formula for bottles. It is the general pattern for every application in this chapter: slice the quantity into infinitesimal pieces, identify each piece's contribution, integrate. The integral is always a sum. What changes from problem to problem is what you're summing and what each piece looks like. Learning that pattern — not memorizing formulas — is what this chapter is for.
 
-- *Compute* the area between two curves.
-- *Compute* the volume of a solid of revolution by the disk and shell methods.
-- *Compute* the arc length of a curve.
-- *Compute* the work done by a variable force, including the work to pump fluid out of a tank.
-- *Recognize* the structural pattern of slice-and-integrate that handles each of these problems.
+---
 
-You walk in with the integration techniques of Chapter 5. You walk out with the engineering applications that those techniques were invented to handle.
+## Area between curves
 
-## 6.2 Area between curves
-
-The simplest application. If $f(x) \geq g(x)$ on $[a, b]$, the area between the curves $y = f(x)$ and $y = g(x)$ over the interval is
+The simplest case. Two curves, $y = f(x)$ above and $y = g(x)$ below, from $x = a$ to $x = b$. At each position $x$, the vertical gap between them is $f(x) - g(x)$. The area of a thin strip at position $x$ with width $dx$ is $[f(x) - g(x)] \, dx$. Add them up:
 
 $$A = \int_a^b [f(x) - g(x)] \, dx$$
 
-The integrand at each $x$ is the vertical distance between the upper and lower curves. The integral sums these distances times $dx$, producing the total area.
+<!-- → IMAGE: graph of two curves f(x) and g(x) with the region between them shaded, one thin vertical strip of width dx highlighted at an arbitrary x, with the height of the strip labeled f(x)−g(x). The strip should be visually distinct (a different shade) to isolate the integrand geometry from the accumulated area. -->
 
-A worked example. Find the area enclosed between $y = x^2$ and $y = x + 2$.
+Let me work one example through. Find the area enclosed by $y = x^2$ and $y = x + 2$.
 
-First, find where the curves intersect: $x^2 = x + 2 \implies x^2 - x - 2 = 0 \implies (x-2)(x+1) = 0$. So $x = -1$ and $x = 2$.
+First, where do they meet? Set $x^2 = x + 2$, which rearranges to $x^2 - x - 2 = 0$, or $(x-2)(x+1) = 0$. They intersect at $x = -1$ and $x = 2$.
 
-On the interval $[-1, 2]$, which is upper? At $x = 0$, $x^2 = 0$ and $x + 2 = 2$, so $x + 2$ is upper.
+On that interval, which is on top? At $x = 0$: $x^2 = 0$ and $x + 2 = 2$. The line is above the parabola.
 
 $$A = \int_{-1}^{2} [(x+2) - x^2] \, dx = \left[\frac{x^2}{2} + 2x - \frac{x^3}{3}\right]_{-1}^{2}$$
 
-$$= \left(2 + 4 - \frac{8}{3}\right) - \left(\frac{1}{2} - 2 + \frac{1}{3}\right) = \frac{10}{3} - \left(-\frac{7}{6}\right) = \frac{27}{6} = \frac{9}{2}$$
+$$= \left(2 + 4 - \frac{8}{3}\right) - \left(\frac{1}{2} - 2 + \frac{1}{3}\right) = \frac{10}{3} + \frac{7}{6} = \frac{9}{2}$$
 
-When the curves cross within the interval, you have to split the integral. Suppose $f(x) \geq g(x)$ on $[a, c]$ and $g(x) \geq f(x)$ on $[c, b]$. The total area is $\int_a^c [f - g] \, dx + \int_c^b [g - f] \, dx$. Always integrate the upper curve minus the lower curve.
+The enclosed area is $9/2$ square units.
 
-The trade-off: integrating with respect to $x$ buys *standard form* at the cost of *requiring the curves to be functions of $x$*. Some regions are more naturally described as functions of $y$ — and integrating with respect to $y$ in those cases (with horizontal slices instead of vertical ones) gives a cleaner setup.
+One subtlety: if the curves cross within the interval you're integrating over, the formula breaks down. Where $f(x) - g(x)$ is negative, the integral subtracts area instead of adding it. The fix is to split the integral at every crossing point and always integrate the *upper* curve minus the *lower* curve on each sub-interval. That ensures you're summing positive widths.
 
-## 6.3 Volume by the disk method
+---
 
-Spin a curve $y = f(x)$ around the $x$-axis from $x = a$ to $x = b$. The resulting solid has *circular cross-sections* perpendicular to the axis. The cross-section at position $x$ has radius $f(x)$ and area $\pi [f(x)]^2$. Slice the solid into thin disks of thickness $dx$; each disk has volume $\pi [f(x)]^2 \, dx$. The total volume:
+## Volume: slicing into disks
+
+Spin the curve $y = f(x)$, from $x = a$ to $x = b$, around the $x$-axis. The swept solid has circular cross-sections perpendicular to the axis. At position $x$, the cross-section is a circle of radius $f(x)$, with area $\pi [f(x)]^2$. A thin slab of thickness $dx$ has volume $\pi [f(x)]^2 \, dx$. The total volume:
 
 $$V = \int_a^b \pi [f(x)]^2 \, dx$$
 
-A worked example. Find the volume of the solid generated by rotating $y = \sqrt{x}$ from $x = 0$ to $x = 4$ around the $x$-axis.
+This is the *disk method*. It is the wine-bottle formula from the opening, written in $x$ instead of $y$.
 
-$f(x) = \sqrt{x}$, so $[f(x)]^2 = x$.
+A worked example. Rotate $y = \sqrt{x}$ from $x = 0$ to $x = 4$ around the $x$-axis. The cross-sectional radius at position $x$ is $\sqrt{x}$, so $[f(x)]^2 = x$.
 
 $$V = \int_0^4 \pi x \, dx = \pi \cdot \frac{x^2}{2} \bigg|_0^4 = 8\pi$$
 
-The solid is a paraboloid. Its volume is exactly $8\pi$ cubic units.
+The resulting solid is a paraboloid. Its volume is exactly $8\pi$ cubic units.
 
-*Washer method*. If the rotation is around an axis not at the curve, or the solid has a hole (rotated between two curves), the cross-section is a *washer* — a disk with a smaller disk removed. The volume integrand is $\pi(R^2 - r^2)$, where $R$ is the outer radius and $r$ is the inner radius:
+<!-- → IMAGE: the paraboloid generated by rotating y=√x around the x-axis from x=0 to x=4, rendered as a 3D solid with a single disk cross-section at an arbitrary x drawn in — showing the circular face of radius √x, with the thickness dx labeled. The solid should be translucent enough that the disk is visible inside it. -->
+
+When the rotation produces a solid with a hole through the middle — say, rotating the region *between* two curves around an axis — each cross-section is a washer rather than a disk: a full circle with a smaller circle removed. The area of that washer is $\pi(R^2 - r^2)$, where $R$ is the outer radius and $r$ is the inner radius. The volume integral becomes:
 
 $$V = \int_a^b \pi[R(x)^2 - r(x)^2] \, dx$$
 
-This handles solids of revolution between two curves (e.g., the region between $y = x^2$ and $y = x$ rotated about the $x$-axis).
+The reasoning is identical to the disk method; the geometry of the cross-section is slightly richer.
 
-## 6.4 Volume by the shell method
+---
 
-When rotation is around the $y$-axis (or another vertical axis) and the curve is given as $y = f(x)$, vertical slices produce *cylindrical shells* rather than disks. Each shell at position $x$ has radius $x$, height $f(x)$, and thickness $dx$. Its volume is approximately $2\pi x \cdot f(x) \cdot dx$ (circumference times height times thickness).
+## Volume: slicing into shells
 
-$$V = \int_a^b 2\pi x \cdot f(x) \, dx$$
+The disk method slices perpendicular to the axis. There is a second approach — *shells* — that slices parallel to the axis.
 
-A worked example. Find the volume of the solid generated by rotating $y = x^2$ from $x = 0$ to $x = 2$ around the $y$-axis using the shell method.
+Take the region under $y = f(x)$ from $x = a$ to $x = b$ and rotate it around the $y$-axis. A thin vertical strip at position $x$ with width $dx$ sweeps out a cylindrical shell. The shell has radius $x$ (its distance from the axis), height $f(x)$, and thickness $dx$. The volume of a thin cylindrical shell is approximately its circumference times its height times its thickness:
 
-$$V = \int_0^2 2\pi x \cdot x^2 \, dx = 2\pi \int_0^2 x^3 \, dx = 2\pi \cdot \frac{x^4}{4} \bigg|_0^2 = 2\pi \cdot 4 = 8\pi$$
+$$dV = 2\pi x \cdot f(x) \cdot dx$$
 
-The shell method and the disk/washer method are alternative tools for the same job. For some problems one is dramatically simpler than the other; experience teaches which to reach for. The standard heuristic: if the axis of rotation is *parallel* to the natural slicing direction (vertical slices, vertical axis), use shells; if *perpendicular* (vertical slices, horizontal axis), use disks/washers.
+Add them up:
 
-## 6.5 Arc length
+$$V = \int_a^b 2\pi x \, f(x) \, dx$$
 
-The length of a smooth curve $y = f(x)$ from $x = a$ to $x = b$ is
+A worked example. Rotate $y = x^2$ from $x = 0$ to $x = 2$ around the $y$-axis.
+
+$$V = \int_0^2 2\pi x \cdot x^2 \, dx = 2\pi \int_0^2 x^3 \, dx = 2\pi \cdot 4 = 8\pi$$
+
+The shell method and the disk method are two different decompositions of the same solid. Neither is more correct; they're different ways of slicing. The useful heuristic: if the axis of rotation is *perpendicular* to the natural slicing direction, use disks. If the axis is *parallel* to it, use shells. For some problems one method produces a clean integral and the other produces an algebraic mess. With experience you develop intuition for which to reach for.
+
+<!-- → INFOGRAPHIC: two side-by-side diagrams of the same solid of revolution — left diagram shows the disk decomposition (horizontal slices, circular faces), right shows the shell decomposition (vertical strips, cylindrical shells). Each should label the relevant dimensions: radius and thickness for disks; radius, height, and thickness for shells. Caption: "same solid, two ways of slicing — the choice of method changes the integrand, not the answer." -->
+
+---
+
+## Arc length
+
+How long is a curve?
+
+If the curve were a straight line, the answer would be easy: the distance formula. For a general curve $y = f(x)$, the idea is the same as always — slice, identify, integrate. Break the curve into tiny pieces. Each piece, when it's short enough, is approximately a straight line segment. The length of the segment connecting $(x, f(x))$ to $(x + dx, f(x + dx))$ is given by the Pythagorean theorem:
+
+$$d\ell = \sqrt{(dx)^2 + (dy)^2} = \sqrt{1 + \left(\frac{dy}{dx}\right)^2} \, dx = \sqrt{1 + [f'(x)]^2} \, dx$$
+
+<!-- → IMAGE: a smooth curve with one small segment magnified into an inset — the inset shows the right triangle with legs dx and dy, hypotenuse dℓ, and the label √(dx²+dy²) on the hypotenuse. This makes the Pythagorean origin of the arc length integrand visual rather than purely algebraic. -->
+
+Add them up over $[a, b]$:
 
 $$L = \int_a^b \sqrt{1 + [f'(x)]^2} \, dx$$
 
-The derivation. Slice the curve into small pieces. Each piece, approximately straight, has length given by the Pythagorean theorem: $\sqrt{(\Delta x)^2 + (\Delta y)^2}$. As the slices shrink, $\Delta y / \Delta x \to f'(x)$, and the piece length becomes $\sqrt{1 + [f'(x)]^2} \, dx$. Integrating gives the formula.
+One worked example where the integral simplifies nicely. Find the length of $y = \frac{2}{3} x^{3/2}$ from $x = 0$ to $x = 3$.
 
-A worked example. Find the arc length of $y = (2/3) x^{3/2}$ from $x = 0$ to $x = 3$.
+$f'(x) = x^{1/2}$, so $[f'(x)]^2 = x$, and the integrand is $\sqrt{1 + x}$.
 
-$f'(x) = x^{1/2}$, so $[f'(x)]^2 = x$, and $\sqrt{1 + x}$ is the integrand.
+$$L = \int_0^3 \sqrt{1 + x} \, dx = \frac{2}{3}(1 + x)^{3/2} \bigg|_0^3 = \frac{2}{3}(8 - 1) = \frac{14}{3}$$
 
-$$L = \int_0^3 \sqrt{1 + x} \, dx = \frac{2}{3}(1+x)^{3/2} \bigg|_0^3 = \frac{2}{3}(8 - 1) = \frac{14}{3}$$
+This case cooperated. Most don't. The arc length integrand $\sqrt{1 + [f'(x)]^2}$ rarely simplifies to something elementary. For a circle, a parabola, an ellipse — most familiar curves — the arc length integral cannot be expressed in closed form. It has to be evaluated numerically. The formula is always the same; the integration is usually harder.
 
-Arc length integrals are notoriously hard for most curves. The formula's structure — square root of one plus a derivative squared — rarely simplifies to anything elementary unless the function is specifically chosen so that $1 + [f'(x)]^2$ is a perfect square. Most arc-length integrals must be evaluated numerically.
+This is not a failure of the formula. It is a fact about the geometry of curves. Arc length is genuinely hard to compute, and the integral reflects that honestly.
 
-## 6.6 Work and pumping problems
+---
 
-In physics, work equals force times distance — when both are constant. When the force varies with position, the work done in moving an object from $x = a$ to $x = b$ is
+## Work done by a variable force
+
+In introductory physics, work equals force times distance: $W = F \cdot d$. This assumes the force is constant. It never is, in practice — at least not over anything interesting.
+
+When the force $F(x)$ varies with position, the work done in moving from $x = a$ to $x = b$ is, once again, the integral of the infinitesimal contributions. Each thin displacement $dx$ requires work $F(x) \, dx$. The total:
 
 $$W = \int_a^b F(x) \, dx$$
 
-A worked example. *Hooke's law* says the force required to stretch a spring is $F(x) = k x$, where $x$ is the displacement from natural length and $k$ is the spring constant. Find the work to stretch a spring with $k = 4$ N/m from natural length to 0.5 m.
+The canonical example is a spring. Hooke's law says that the force required to stretch a spring by displacement $x$ from its natural length is $F(x) = kx$, where $k$ is the spring constant. To stretch the spring from its natural length to a distance $d$:
 
-$$W = \int_0^{0.5} 4x \, dx = 2 x^2 \bigg|_0^{0.5} = 0.5 \text{ J}$$
+$$W = \int_0^d kx \, dx = \frac{k d^2}{2}$$
 
-The 0.5 joules of work go into stored potential energy in the spring.
+For $k = 4$ N/m and $d = 0.5$ m, the work is 0.5 joules. That energy is stored as potential energy in the spring — the very energy released when you let go.
 
-*Pumping problems*. Suppose a tank of water sits on the ground, and we want to compute the work to pump all the water out the top. Different layers of water are at different depths and travel different distances. Slice the water column into horizontal layers of thickness $dy$ at depth $y$ below the top. Each layer:
+The spring is clean because the force law is simple. More interesting: pumping water.
 
-- Has volume $A(y) \, dy$, where $A(y)$ is the cross-sectional area of the tank at depth $y$.
-- Has mass $\rho A(y) \, dy$, where $\rho$ is the density of water (1000 kg/m³).
-- Has weight $\rho g A(y) \, dy$ (force = weight = mass × $g$, with $g \approx 9.8$ m/s²).
-- Travels a distance $y$ to be pumped out the top.
-- Contributes work $\rho g A(y) y \, dy$.
+---
 
-Total work to empty the tank:
+## Pumping water out of a tank
 
-$$W = \int_0^h \rho g A(y) y \, dy$$
+Suppose a cylindrical tank of radius $r$ and height $h$ is filled with water, and you want to pump all the water out over the top rim. How much work does that require?
 
-For a cylindrical tank of radius $r$ and height $h$, $A(y) = \pi r^2$ is constant, and the work integral reduces to
+The difficulty is that different layers of water sit at different depths. Water near the top needs to travel almost no distance; water near the bottom has to travel the full height of the tank. The work depends on where each layer sits.
 
-$$W = \rho g \pi r^2 \cdot \frac{h^2}{2}$$
+Slice the water column into horizontal layers of thickness $dy$ at height $y$ above the bottom. Each layer:
 
-This same structure handles tanks of any shape, fluids of any density, and partial pumpings (where the limits of integration cover only part of the tank).
+- Has volume $\pi r^2 \, dy$ (for a cylinder, the cross-section is constant).
+- Has mass $\rho \pi r^2 \, dy$, where $\rho = 1000$ kg/m³ is the density of water.
+- Has weight $\rho g \pi r^2 \, dy$, the downward force it exerts (with $g \approx 9.8$ m/s²).
+- Must be lifted a distance $h - y$ to reach the top rim.
+- Contributes work $(h - y) \cdot \rho g \pi r^2 \, dy$.
 
-## 6.7 Synthesis: the wine bottle, computed
+Integrate over the full depth of the tank, from $y = 0$ to $y = h$:
 
-Return to the wine bottle. The shape — narrow at the neck, widest at the shoulder, tapering at the base — is described by a profile $r(y)$ that varies with height $y$ from the bottom.
+$$W = \int_0^h \rho g \pi r^2 (h - y) \, dy = \rho g \pi r^2 \left[hy - \frac{y^2}{2}\right]_0^h = \rho g \pi r^2 \cdot \frac{h^2}{2}$$
 
-Suppose, as a simple model, the bottle has total height 30 cm with the following profile:
+<!-- → INFOGRAPHIC: vertical cross-section of a cylindrical tank with water filled to height h — one horizontal layer at height y highlighted with its thickness dy labeled, and an arrow showing the lift distance (h−y) from the layer to the top rim. The four quantities annotated on the diagram: volume πr²dy, mass ρπr²dy, weight ρgπr²dy, and work contribution (h−y)·ρgπr²dy. Makes the four-step physical reasoning visual. -->
 
-- From $y = 0$ to $y = 20$ (the body): radius is 4 cm, constant.
-- From $y = 20$ to $y = 25$ (the shoulder): radius decreases linearly from 4 cm to 1.5 cm.
-- From $y = 25$ to $y = 30$ (the neck): radius is 1.5 cm, constant.
+For a non-cylindrical tank — a cone, a sphere, a more exotic shape — the cross-sectional area $A(y)$ varies with height. The formula generalizes to:
 
-This is a piecewise function $r(y)$. The total interior volume:
+$$W = \int_0^h \rho g \, A(y) \, (h - y) \, dy$$
 
-$$V = \int_0^{30} \pi [r(y)]^2 \, dy$$
+The structure is always the same: weight of layer times distance traveled, integrated. The geometry of the tank goes into $A(y)$.
 
-By the additivity property of integrals (Chapter 5 §5.6), we can split:
+---
 
-$$V = \int_0^{20} \pi (4)^2 \, dy + \int_{20}^{25} \pi [r(y)]^2 \, dy + \int_{25}^{30} \pi (1.5)^2 \, dy$$
+## The wine bottle, computed
 
-The body contributes $\pi \cdot 16 \cdot 20 = 320\pi \approx 1005$ cm³.
+Return to the opening. The bottle has a profile $r(y)$ that varies with height. Take a simplified model: the body (from $y = 0$ to $y = 20$ cm) has constant radius 4 cm; the shoulder (from $y = 20$ to $y = 25$ cm) tapers linearly from 4 cm to 1.5 cm; the neck (from $y = 25$ to $y = 30$ cm) has constant radius 1.5 cm.
 
-The neck contributes $\pi \cdot 2.25 \cdot 5 = 11.25\pi \approx 35$ cm³.
+The integral $V = \int_0^{30} \pi [r(y)]^2 \, dy$ splits into three pieces at the transitions in the profile.
 
-The shoulder requires more work. The radius is linear from 4 to 1.5 over $y \in [20, 25]$:
+The *body* contributes $\pi (4)^2 \cdot 20 = 320\pi \approx 1005$ cm³.
 
-$$r(y) = 4 + \frac{1.5 - 4}{25 - 20}(y - 20) = 4 - 0.5(y - 20)$$
+The *neck* contributes $\pi (1.5)^2 \cdot 5 = 11.25\pi \approx 35$ cm³.
 
-Substituting $u = y - 20$ (so $du = dy$, with $u$ from 0 to 5):
+The *shoulder* requires a little more work. The radius decreases linearly from 4 to 1.5 over 5 cm, so $r(y) = 4 - 0.5(y - 20)$ for $y \in [20, 25]$. Substituting $u = y - 20$:
 
-$$\int_{20}^{25} \pi [4 - 0.5(y-20)]^2 \, dy = \pi \int_0^5 (4 - 0.5u)^2 \, du$$
+$$\int_{20}^{25} \pi [4 - 0.5(y - 20)]^2 \, dy = \pi \int_0^5 (4 - 0.5u)^2 \, du$$
 
-$$= \pi \int_0^5 (16 - 4u + 0.25u^2) \, du = \pi \left[16u - 2u^2 + \frac{u^3}{12}\right]_0^5 = \pi\left[80 - 50 + \frac{125}{12}\right]$$
+$$= \pi \int_0^5 (16 - 4u + 0.25u^2) \, du = \pi \left[16u - 2u^2 + \frac{u^3}{12}\right]_0^5 \approx 40.4\pi \approx 127 \text{ cm}^3$$
 
-$$= \pi \left[30 + 10.42\right] \approx 40.42 \pi \approx 127 \text{ cm}^3$$
+Total: $1005 + 127 + 35 \approx 1167$ cm³, or about 1.17 liters. A standard wine bottle holds 750 mL, so the model overestimates by about a third — not surprising, since a real bottle narrows appreciably even in the body. Refine the profile to match the actual shape and the integral produces the actual volume to whatever precision the measurement supports.
 
-Total interior volume: $1005 + 127 + 35 \approx 1167$ cm³, or roughly 1.17 liters. A standard wine bottle holds 750 mL, so the model overestimates — but the structural method is correct, and refining the profile to match a real bottle's shape would produce the actual volume to whatever precision is desired.
+<!-- → CHART: bar chart with three segments stacked vertically — body (1005 cm³), shoulder (127 cm³), neck (35 cm³) — with the 750 mL standard bottle volume shown as a horizontal reference line. Annotates the overestimate visually and shows the relative contribution of each section to the total. A second, thinner bar showing a refined cylindrical model alongside for comparison would be effective. -->
 
-The pattern is universal. Every "how much" question in continuous geometry — area, volume, length, mass, work, charge, force — gets answered by slicing into infinitesimal contributions, identifying each contribution, and integrating. The Riemann-sum perspective from Chapter 5 §5.2 is the master technique.
+The point isn't the specific number. It's that the same method — slice, identify, integrate — computes the volume of any shape that can be described by a profile function. The structural pattern doesn't change; only the integrand does.
 
-## 6.8 Exercises
+---
 
-### Warm-up
+## The pattern underneath everything
 
-1. **Find the area between $y = x$ and $y = x^2$ from $x = 0$ to $x = 1$.**
+Step back. Every computation in this chapter followed the same sequence of moves.
 
-2. **Find the volume of the solid generated by rotating $y = x$ from $x = 0$ to $x = 2$ around the $x$-axis.**
+*Identify what accumulates.* Area, volume, length, work — each is a quantity that builds up continuously as you move along an axis.
 
-3. **State the arc length formula** for a smooth curve $y = f(x)$ from $x = a$ to $x = b$.
+*Slice into infinitesimal pieces.* At each position, there is a thin slice — a strip, a disk, a shell, a layer of water — that contributes a small amount to the total.
+
+*Write the contribution of one piece.* This is the integrand. Getting it right requires understanding the geometry of the slice — its dimensions, its weight, its distance from some reference.
+
+*Integrate.* Add up all the contributions over the relevant range.
+
+<!-- → INFOGRAPHIC: four-panel flow diagram — (1) "Identify what accumulates" with icon of a shaded region, (2) "Slice into pieces" with a single thin strip extracted, (3) "Write one piece's contribution" with the integrand expression labeled, (4) "Integrate" with the integral symbol and limits. An arrow connects each panel to the next. At the bottom, five rows showing how each application in the chapter maps to this pattern: area, disk volume, shell volume, arc length, work. -->
+
+The Fundamental Theorem of Calculus, which we developed in Chapter 5, is what makes step four tractable: it converts the limit of a sum into an antiderivative evaluated at two points. Without it, every problem would require evaluating a Riemann sum directly. With it, the accumulated quantity reduces to finding an antiderivative — the reverse of differentiation.
+
+This is also why integration is harder than differentiation. Differentiation has rules: given any elementary function, you can differentiate it by applying the chain rule, product rule, and a small table of basic derivatives. Integration has no such systematic procedure. Some antiderivatives exist in closed form; many don't. The arc length of a parabola, the volume under a Gaussian curve, the period of a nonlinear pendulum — these integrals don't have elementary antiderivatives. They must be evaluated numerically.
+
+In practice, numerical integration is what engineers and scientists actually use. Software libraries handle the computation; the human's job is to set up the integral correctly — to identify what accumulates, write the integrand, specify the limits. The setup requires understanding. The computation is delegated.
+
+---
+
+## What's waiting beyond this chapter
+
+The slice-identify-integrate pattern extends far past the applications here. Continuous probability lives entirely in integration: the probability that a random variable falls in an interval is the integral of its density function over that interval; the expected value is the integral of the variable weighted by the density. The integral is not an analogy — it *is* the probability.
+
+Center of mass is another integral: the balance point of a continuous distribution of mass is the weighted average position, computed as a ratio of integrals. Hydrostatic pressure on a dam face — the force that the water column exerts as depth and hence pressure increases — is an integral of pressure times area over depth. Surface area of a solid of revolution, the area of the skin swept out when a curve spins around an axis, follows the same pattern as arc length, with an extra $2\pi f(x)$ factor for the circumference at each height.
+
+And in more advanced settings — multivariable calculus, differential equations, physics, engineering, statistics — integration in multiple dimensions handles the volumes of shapes that can't be swept out by a single curve, the flow of fluid through a surface, the probability over a joint distribution. The operations are more elaborate; the pattern of slicing and accumulating is structurally identical.
+
+---
+
+## Summary
+
+Integration is the mathematics of accumulation. Differentiation asks how fast something is changing right now; integration asks how much has accumulated.
+
+The formulas in this chapter — area between curves, volume by disks or shells, arc length, work, pumping — are not separate things to memorize. They are all instances of one procedure: identify the infinitesimal piece, write its contribution as an integrand, integrate over the range.
+
+*Area between curves*: integrate the vertical gap $f(x) - g(x)$ over the interval, upper curve minus lower.
+
+*Volume by disks*: $\pi$ times the radius squared, integrated — the area of the circular cross-section times the thickness.
+
+*Volume by shells*: $2\pi$ times the radius times the height, integrated — the circumference times the height times the thickness of the shell.
+
+*Arc length*: $\sqrt{1 + [f'(x)]^2}$, integrated — the Pythagorean length of each infinitesimal segment.
+
+*Work*: force times displacement, integrated — or, for pumping, weight of layer times distance traveled, integrated.
+
+The trade-off running through all of it: the method is universal, but the integrals it produces are often hard. Closed-form antiderivatives exist only for the problems that were designed to have them. Real problems — real bottle profiles, real force fields, real probability distributions — almost always require numerical evaluation. The integral is still the right setup. The computation just needs a computer.
+
+The single most important idea: every quantity that accumulates continuously is an integral, and every integral is a limit of sums. The Fundamental Theorem turns those sums into antiderivatives. The applications are just places where that machinery has work to do.
+
+---
+
+## Exercises
+
+### Warm-Up
+
+1. Find the area between $y = x$ and $y = x^2$ from $x = 0$ to $x = 1$. Which curve is on top? Set up the integrand before evaluating.
+
+2. Find the volume of the solid generated by rotating $y = x$ from $x = 0$ to $x = 2$ around the $x$-axis using the disk method.
+
+3. A spring with constant $k = 6$ N/m is stretched from its natural length to a displacement of 0.4 m. Compute the work done.
 
 ### Application
 
-4. **Find the area enclosed by $y = \sin x$, $y = \cos x$, and the $y$-axis** from the origin to their first intersection.
+4. Find the area enclosed by $y = \sin x$ and $y = \cos x$ between their first two intersections in $[0, \pi]$. Identify where the curves cross, which is on top in each sub-interval, and split the integral accordingly.
 
-5. **Compute the volume by both the disk method and the shell method:** the solid generated by rotating $y = x^2$ from $x = 0$ to $x = 1$ around the $y$-axis.
+5. The region under $y = x^2$ from $x = 0$ to $x = 1$ is rotated around the $y$-axis. Compute the volume using the shell method. Then set up — but do not evaluate — the equivalent disk method integral in $y$. Which setup is cleaner, and why?
 
-6. **Compute the work** done in stretching a spring of constant $k = 80$ N/m from natural length to 0.3 m.
+6. Find the arc length of $y = \frac{1}{3}(x^2 + 2)^{3/2}$ from $x = 0$ to $x = 3$. Compute $f'(x)$ first, simplify $1 + [f'(x)]^2$, and check whether the result is a perfect square before integrating.
 
 ### Synthesis
 
-7. **A cylindrical tank of radius 2 m and height 5 m is filled with water.** Compute the work done to pump all the water out the top.
+7. A cylindrical tank of radius 2 m and height 4 m is filled with water ($\rho = 1000$ kg/m³, $g = 9.8$ m/s²). Compute the work to pump all the water out over the top rim. Set up the layer-by-layer integral explicitly — volume of layer, weight of layer, distance traveled — before combining.
 
-8. **Find the arc length of the curve $y = \ln(\sec x)$ from $x = 0$ to $x = \pi/4$.** Use the identity $\sec^2 x = 1 + \tan^2 x$.
+8. A conical tank (vertex down) has height 6 m and top radius 3 m, and is filled with water. The cross-sectional radius at height $y$ above the vertex is $r(y) = y/2$. Compute the work to pump all the water out the top. Compare with a cylindrical tank of the same height and top radius — which requires more work, and why does the geometry explain the answer?
 
 ### Challenge
 
-9. **A spherical tank of radius 3 m is buried so its top is at ground level, full of water.** Compute the work to pump all the water out to ground level. (Use the cross-sectional area as a function of depth, and the formula $W = \int \rho g A(y) y \, dy$.)
+9. The profile of a vase is given by $r(y) = 2 + \sin(\pi y / 10)$ for $y \in [0, 10]$ cm, where $r$ is in centimeters. Write the integral for the interior volume and evaluate it. Does the sinusoidal bulge produce a noticeably different volume from a straight cylinder of the same height and average radius? Compute both and compare.
 
-10. **For the wine-bottle model in §6.7,** modify the profile so the body has radius 3.5 cm and total height is 33 cm (with the neck at 1.5 cm radius and shoulder transition over 6 cm). Compute the new interior volume and discuss whether the result better approximates the standard 750 mL.
-
-## 6.9 Chapter summary
-
-You walked into this chapter with integration as a technique. You walk out with integration as the universal answer to questions of accumulation in continuous geometry.
-
-*Area between curves*: integrate the upper minus lower over the interval. *Volume of a solid of revolution*: disks ($\pi R^2 \, dx$) when the axis is perpendicular to slicing; shells ($2\pi r h \, dx$) when parallel. *Arc length*: $\sqrt{1 + [f'(x)]^2} \, dx$, integrated. *Work*: variable force times displacement, integrated. *Pumping problems*: density times gravity times area times distance, integrated.
-
-The single most important idea: the *slice-identify-integrate* pattern is the master technique. Every quantity that accumulates continuously across an interval — area, volume, length, mass, charge, energy, probability — gets computed the same way: identify the infinitesimal contribution at each point, write it as an integrand, integrate.
-
-The common mistake to watch for: forgetting which variable is being integrated against. In a volume-of-revolution problem with vertical axis, slicing horizontally produces an integrand involving $r^2$ (disks); slicing vertically produces an integrand involving $2\pi x$ (shells). Both are correct; both must be set up consistently. Mixing the two — say, using the disk integrand but integrating vertically — produces wrong answers.
-
-## 6.10 Surface area, hydrostatic pressure, and the rest
-
-The chapter so far covered area, volume, arc length, and work. The same slice-and-integrate machinery handles several other applications worth knowing about by name even if the full development belongs in subsequent courses.
-
-*Surface area of a solid of revolution*. A surface generated by rotating $y = f(x)$ from $x = a$ to $x = b$ around the $x$-axis has area
-
-$$S = \int_a^b 2\pi f(x) \sqrt{1 + [f'(x)]^2} \, dx$$
-
-The integrand combines the circumference at each point ($2\pi f(x)$) with the arc-length element ($\sqrt{1 + [f'(x)]^2} \, dx$). The pattern parallels the volume formulas; the integrand reflects the geometry of a thin band (a frustum) of the surface.
-
-*Hydrostatic pressure on a submerged surface*. Pressure increases with depth: at depth $y$ below the water surface, pressure is $P = \rho g y$. For a flat surface submerged vertically, the total force is
-
-$$F = \int_a^b \rho g y \cdot w(y) \, dy$$
-
-where $w(y)$ is the width of the surface at depth $y$. The integrand is pressure times the small-strip area $w(y) \, dy$, integrated over the depth range. Engineers use this calculation to design dam walls, submarine hulls, and aquarium glass.
-
-*Center of mass*. The center of mass of a thin lamina with density $\rho(x, y)$ over a region requires double integrals (multivariable calculus). The single-variable case — a rod of varying linear density $\rho(x)$ along $[a, b]$ — gives
-
-$$\bar{x} = \frac{\int_a^b x \rho(x) \, dx}{\int_a^b \rho(x) \, dx}$$
-
-The numerator is the *first moment* of the rod about the origin; the denominator is its total mass. The ratio is where the rod balances.
-
-*Continuous probability*. A continuous random variable $X$ has a probability density function $f(x)$ with $\int_{-\infty}^\infty f(x) \, dx = 1$. The probability that $X$ falls in $[a, b]$ is $\int_a^b f(x) \, dx$. The expected value of $X$ is $E[X] = \int_{-\infty}^\infty x f(x) \, dx$. Probability theory in continuous spaces is calculus applied to non-negative functions that integrate to one.
-
-Each of these is a chapter in its own right. The structural lesson — slice the quantity into infinitesimal contributions, identify each piece, integrate — recurs without modification.
-
-## 6.11 The continuity-discreteness boundary
-
-A reflection on what calculus does and doesn't handle. Integration handles continuous accumulation. Quantities that come in *discrete* packages — counts of objects, integer counts of events, finite samples — are not integrable in the calculus sense; they are summed.
-
-But the boundary between continuous and discrete is fuzzier than it first appears. A coiled spring has discrete coils but stretches continuously under load. A radioactive sample has discrete atoms but decays at a rate so close to continuous that calculus models it perfectly. A population grows in discrete births but at scales of millions can be modeled as continuous. Calculus is the right tool whenever the discrete granularity is fine enough to be ignored relative to the questions being asked.
-
-Where the granularity *can't* be ignored — small populations, individual transactions, single-photon experiments — we use *discrete mathematics* instead: sums replace integrals, difference equations replace differential equations, generating functions replace Taylor series. The two subjects are parallel and frequently translate into each other. Many of the techniques in this book have discrete-math analogs (the discrete derivative is the difference operator $\Delta f(n) = f(n+1) - f(n)$; the discrete integral is the cumulative sum). The continuous and discrete versions of any structural pattern usually inform each other.
-
-## 6.12 An applied note: numerical integration in practice
-
-Almost every real-world integration problem above the textbook level uses numerical methods. Software libraries (NumPy/SciPy in Python, MATLAB's quadrature routines, Mathematica's `NIntegrate`) handle integrals where closed-form antiderivatives don't exist. Three families of methods cover most cases.
-
-*Newton-Cotes rules* — including the trapezoidal rule and Simpson's rule — fit polynomials to small groups of points and integrate the polynomials exactly. Simpson's rule, which fits parabolas to triples of points, is dramatically more accurate than the trapezoidal rule for smooth integrands and is the default choice for many applications.
-
-*Gaussian quadrature* — a more sophisticated approach that chooses sample points and weights to integrate polynomials of high degree exactly. For smooth functions, Gaussian quadrature converges much faster than Simpson's rule with the same number of sample points.
-
-*Monte Carlo integration* — for integrals in many dimensions where deterministic methods fail to scale. Sample random points in the integration domain; evaluate the integrand at each; multiply by domain volume. The error decreases as $1/\sqrt{N}$ regardless of dimension, which makes Monte Carlo the only feasible option for high-dimensional integrals (which arise constantly in physics and finance).
-
-The wine-bottle volume calculation in §6.7 used closed-form integration because the profile was piecewise simple. A real bottle's profile, measured optically and curve-fit to data, would generally produce an integrand without elementary antiderivatives. The numerical approach: tabulate the profile, fit a smooth function to the table, integrate the function numerically. The result is the volume to whatever precision the input data supports.
-
-## 6.13 Closing the book
-
-You've walked through the central machinery of single-variable calculus. Functions and graphs (Chapter 1). Limits (Chapter 2). Derivatives (Chapter 3). Applications of derivatives (Chapter 4). Integration (Chapter 5). Applications of integration (Chapter 6).
-
-Two operations — differentiation and integration — defined as limits. One theorem — the Fundamental Theorem of Calculus — connecting them as inverses. A small library of standard derivatives and antiderivatives. A handful of techniques (chain rule, substitution, integration by parts, partial fractions) for handling combinations and compositions. A set of structural patterns — related rates, optimization, curve sketching, accumulation, volumes of revolution, work — that turn the techniques into solutions for real problems.
-
-Calculus II will extend the integration techniques to harder integrands, develop infinite series and Taylor expansions, and introduce parametric and polar curves. Calculus III will lift everything into multiple variables — partial derivatives, gradients, multiple integrals, vector fields, divergence and curl, the multivariable analogs of the Fundamental Theorem (Green's, Stokes', Gauss's). Differential equations will turn integration into a tool for predicting how systems evolve. Each is a deeper layer; each rests on the foundation this book has built.
-
-The wine bottle's volume, the cyclist's distance, the rocket's tracking angle, the Hennessey Venom's acceleration, the speed limit Einstein discovered, the earthquake magnitudes that compress hundreds-fold gaps into single-digit numbers — all of them are calculus problems. Different surface shapes, same underlying machinery. The instruments you've built here measure rates and accumulations across every continuous process the physical and economic world contains. Use them.
+10. The arc length formula $L = \int_a^b \sqrt{1 + [f'(x)]^2} \, dx$ looks like the Pythagorean theorem applied to each infinitesimal piece of the curve. Derive it from scratch: start from the length of the chord connecting $(x, f(x))$ to $(x + \Delta x, f(x + \Delta x))$, apply the Mean Value Theorem to relate $\Delta y$ to $f'$, and take the limit as $\Delta x \to 0$. What smoothness condition on $f'$ is required for the argument to go through, and what goes wrong at a corner?
