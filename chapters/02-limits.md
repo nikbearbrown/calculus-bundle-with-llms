@@ -1,296 +1,231 @@
 # Chapter 2 — Limits
+*Approaching Without Arriving.*
 
-## 2.1 Opening: The speed Einstein said you cannot reach
+There is a speed you cannot reach.
 
-In 1905, Albert Einstein published the relativity equation that fixed the upper limit of motion in the universe. The mass of an object moving at speed $v$, measured by a stationary observer, is
+Einstein showed this in 1905, and the proof is not philosophical — it is arithmetic. Take any object with mass $m_0$ at rest. Accelerate it. A stationary observer watching this object move at speed $v$ measures its mass as
 
 $$m = \frac{m_0}{\sqrt{1 - \dfrac{v^2}{c^2}}}$$
 
-where $m_0$ is the object's *rest mass* and $c$ is the speed of light. Watch what this formula does.
+where $c$ is the speed of light. Run the numbers. At ordinary speeds — even the 17,500 mph of the International Space Station — the ratio $v/c$ is so small that the denominator is essentially 1, and the moving mass is essentially the rest mass. Push harder. At half the speed of light, $v = 0.5c$, the denominator drops to $\sqrt{0.75} \approx 0.866$, and the moving mass is about 15 percent larger than at rest. At $v = 0.9c$, the mass is roughly 2.3 times the rest mass. At $0.99c$, about 7 times. At $0.999c$, about 22 times. At $0.9999c$, about 71 times.
 
-At everyday speeds — even an aircraft at 600 mph, even the International Space Station at 17,500 mph — the ratio $v/c$ is tiny, so $v^2/c^2$ is microscopically small, the denominator is almost exactly 1, and the moving mass is almost exactly the rest mass. Relativistic effects are present; they are unmeasurably small. Push $v$ up. At 0.1 $c$ — about 67 million mph — the denominator is $\sqrt{1 - 0.01} \approx 0.995$, so the moving mass is about 0.5% larger than rest mass. Real, but mild. At 0.5 $c$ the denominator drops to $\sqrt{0.75} \approx 0.866$, and moving mass is about 15% larger. At 0.9 $c$, the denominator is $\sqrt{0.19} \approx 0.436$, so moving mass is roughly 2.3 times rest mass. At 0.99 $c$, the denominator is about 0.141 and the mass ratio about 7.1. At 0.999 $c$, mass ratio about 22. At 0.9999 $c$, about 71.
+The mass is growing. To accelerate the object further requires force proportional to its current mass, and the mass keeps rising as you push. More force, heavier object, more force needed — the cost of the next small increase in speed grows without bound as you approach $c$.
 
-The mass *grows without bound* as $v$ approaches $c$. To accelerate the object further requires more force, because force equals mass times acceleration, and the mass keeps climbing. The energy required to push a finite-rest-mass object all the way to the speed of light is *infinite*. That is the speed limit Einstein discovered.
+<!-- → [CHART: curve of relativistic mass ratio m/m₀ vs. v/c from 0 to 0.9999c — x-axis labeled as fraction of c, y-axis as mass multiple of m₀ — student should see the curve is nearly flat until ~0.7c, then bends sharply upward, with the vertical asymptote at v = c clearly visible but unreachable] -->
 
-Notice what the equation never says. It never says "at $v = c$, the mass is $\infty$." It says: as $v$ approaches $c$, the mass grows without bound. The equation has no value at $v = c$ — the denominator is zero, and division by zero is undefined. There is no point on the graph at $v = c$. There is only an asymptote that the curve approaches and never reaches.
+Now ask what the formula says at $v = c$ exactly. The denominator becomes $\sqrt{1 - 1} = \sqrt{0} = 0$. Division by zero. The formula gives no value. There is no answer at $v = c$ — not "infinity" as a number, not anything. The formula simply breaks.
 
-This is what a *limit* is. Not a value the function takes at a particular input. A value the function approaches as the input approaches a particular target. The two ideas are different — and the difference between them is what makes calculus possible. By the end of this chapter, you should be able to:
+And yet the behavior is perfectly clear. The mass doesn't hop discontinuously to some new value as you approach $c$. It climbs steadily, faster and faster, growing without bound. You can get arbitrarily close to the speed of light; each step closer costs more than the last. What the formula is doing near $v = c$ — approaching, without arriving — has a name.
 
-- *Define* the limit of a function intuitively and (in §2.6) precisely with $\epsilon$ and $\delta$.
-- *Evaluate* limits using direct substitution, the limit laws, factoring, rationalization, and the squeeze theorem.
-- *Distinguish* one-sided limits from two-sided limits, and infinite limits from limits at infinity.
-- *Identify* points of discontinuity and classify them as removable, jump, or infinite.
-- *Apply* the Intermediate Value Theorem to argue about the existence of solutions to equations.
+It's called a *limit*.
 
-You walk in with the function vocabulary from Chapter 1. You walk out with the foundational concept of calculus.
+---
 
-Why does this chapter matter? Because every concept that follows — the derivative, the integral, infinite series, continuity in higher dimensions — is defined in terms of a limit. If "limit" stays a fuzzy idea, every subsequent chapter is built on sand. The intuition develops in §2.2 and §2.3; the computational toolkit lands in §2.4; continuity and the IVT close the conceptual loop in §2.5; the precise $\epsilon$-$\delta$ definition that lets us *prove* limit statements waits in §2.6 for those who want the rigor.
+## What a limit actually is
 
-## 2.2 The intuitive idea
+Here is the cleanest possible example. Consider the function
 
-Consider the function $f(x) = (x^2 - 4)/(x - 2)$. At $x = 2$, the formula collapses: numerator $0$, denominator $0$, undefined. The function has no value at $x = 2$. But what does $f(x)$ do as $x$ gets close to 2?
+$$f(x) = \frac{x^2 - 4}{x - 2}$$
 
-Compute. At $x = 1.9$, $f(1.9) = (3.61 - 4)/(-0.1) = (-0.39)/(-0.1) = 3.9$. At $x = 1.99$, $f(1.99) = 3.99$. At $x = 1.999$, $f(1.999) = 3.999$. From the right side: $x = 2.1$ gives $4.1$; $x = 2.01$ gives $4.01$; $x = 2.001$ gives $4.001$. From both sides, the function is converging on 4.
+At $x = 2$: numerator is $0$, denominator is $0$, form is $0/0$, value is undefined. The function has a hole at $x = 2$.
 
-Algebraically, the reason is visible: $(x^2 - 4) = (x-2)(x+2)$, so $f(x) = (x+2)$ for $x \neq 2$. The function is identical to $x + 2$ everywhere except at $x = 2$, where the original formula's $(x-2)/(x-2)$ cancellation cannot legally happen because both pieces are zero. But for *any* $x$ near 2 but not equal to 2, the function reads $x + 2$, which approaches 4.
+But ask a different question. Not "what is $f(2)$?" but "what does $f(x)$ approach as $x$ approaches $2$?" Compute a few values. At $x = 1.9$: $f(1.9) = (3.61 - 4)/(-0.1) = 3.9$. At $x = 1.99$: $f(1.99) = 3.99$. At $x = 1.999$: $3.999$. From the other side: $x = 2.1$ gives $4.1$, $x = 2.01$ gives $4.01$, $x = 2.001$ gives $4.001$.
 
-The *limit* of $f(x)$ as $x$ approaches 2 is 4. We write
+The function is heading toward 4 from both directions, clearly, consistently, unstoppably. We write
 
 $$\lim_{x \to 2} \frac{x^2 - 4}{x - 2} = 4$$
 
-The function is undefined at $x = 2$. The limit exists anyway. Existence of a limit is a question about behavior *near* a point, not a question about value *at* a point.
+<!-- → [IMAGE: graph of f(x) = (x²−4)/(x−2) — plot the line y = x+2 with an open circle (hollow dot) at the point (2, 4), emphasizing that the function is defined everywhere on the line except exactly at x = 2; label the hole and the limit value L = 4 separately so the student sees they are different objects] -->
 
-The *intuitive definition*: the limit of $f(x)$ as $x$ approaches $a$ is $L$, written
+The algebra confirms it. Factor the numerator: $x^2 - 4 = (x - 2)(x + 2)$. So
 
-$$\lim_{x \to a} f(x) = L$$
+$$\frac{x^2 - 4}{x - 2} = \frac{(x-2)(x+2)}{x-2} = x + 2 \quad \text{for } x \neq 2$$
 
-if $f(x)$ can be made arbitrarily close to $L$ by taking $x$ sufficiently close to $a$ (but not equal to $a$).
+For any $x$ near 2 but not equal to 2, the function is just $x + 2$. As $x$ approaches 2, $x + 2$ approaches 4. The limit is 4. The fact that the function has no value at the point itself is irrelevant.
 
-Three structural features of this definition matter.
+This is the first thing worth really absorbing: *a limit is not about what happens at a point*. It is about what happens near a point. The question "what is the limit at $x = a$?" and the question "what is the function value at $x = a$?" are different questions. Sometimes they have the same answer. Sometimes they don't. Sometimes one exists and the other doesn't. Keeping them separate is the whole conceptual move.
 
-*The value $f(a)$ is irrelevant.* The function might be undefined at $a$, defined and equal to $L$, or defined and equal to something else entirely. None of those affect the limit. The limit asks only about $x$ near $a$, not $x$ at $a$.
+---
 
-*Approach from both sides.* The limit exists only if $f(x)$ approaches the same value $L$ from the left ($x < a$) and from the right ($x > a$). If the two sides disagree, the two-sided limit does not exist.
+## Why the concept had to be invented
 
-*The limit might not exist at all.* The function might oscillate (like $\sin(1/x)$ near $x = 0$, which oscillates infinitely often as $x \to 0$). It might blow up to $\pm\infty$. It might approach different values from the two sides. In each case, the two-sided limit fails.
+Calculus was invented around 1670, more or less simultaneously by Newton and Leibniz. For the next century and a half, mathematicians used it brilliantly and somewhat guiltily — the results were right, but the foundations were not rigorous. Newton talked about "fluxions," quantities that were on their way to zero but hadn't gotten there. Bishop Berkeley famously mocked this as "the ghosts of departed quantities" — you can't have a thing that's gone away and also still there.
 
-A worked example of all three. Consider
+The trouble was that differentiation, the central operation of calculus, involves dividing by a quantity that eventually becomes zero. The average rate of change of $f$ over a small interval of width $h$ is $(f(x + h) - f(x))/h$. To get the instantaneous rate, you want $h$ to go to zero. But if $h = 0$, you've divided by zero and the expression is meaningless. If $h \neq 0$, you haven't actually reached the instantaneous rate.
 
-$$g(x) = \begin{cases} x + 1 & \text{if } x < 1 \\ 5 & \text{if } x = 1 \\ x + 2 & \text{if } x > 1 \end{cases}$$
+What Newton and Leibniz were doing intuitively — and what Cauchy and Weierstrass pinned down precisely in the 1820s and 1860s — was taking a *limit*. The instantaneous rate of change is not a value the expression takes at $h = 0$. It is the value the expression approaches as $h$ approaches 0. The limit concept dissolves the paradox. "Approaching" and "equaling" are different things, and once you have a precise notion of approaching, you can do the mathematics without any ghosts.
 
-What is $\lim_{x \to 1} g(x)$? Approach from the left: $g(x) = x + 1$, so $g(0.999) = 1.999$, approaching 2. Approach from the right: $g(x) = x + 2$, so $g(1.001) = 3.001$, approaching 3. The two sides disagree. The two-sided limit *does not exist*. The fact that $g(1) = 5$ is irrelevant. The function takes a value at $x = 1$; that value just happens to match neither one-sided limit.
+Every definition in calculus — the derivative, the integral, the sum of an infinite series — is formulated as a limit. This chapter is not a detour before the real subject. It is the foundation the real subject is built on.
 
-The trade-off in the intuitive definition: it buys *immediate accessibility* (you can see what's going on by computing values close to $a$) at the cost of *precision* (it relies on the imprecise word "close"). The $\epsilon$-$\delta$ definition in §2.6 fixes this; it allows formal proofs at the cost of substantially heavier notation. The intuitive definition is what most calculus students reason with day-to-day; the formal one matters when something must be *proven* rather than computed.
+---
 
-## 2.3 One-sided limits, infinite limits, and the existence question
+## When limits fail
 
-When the two sides of an approach disagree, the two-sided limit fails — but the one-sided limits may each exist. We write
+A limit exists when the function approaches the same value from both sides. When it doesn't, things fall apart in one of several named ways.
 
-$$\lim_{x \to a^-} f(x) = L_1$$
+The simplest failure: the two sides disagree. Consider the absolute-value function $f(x) = |x|/x$. For $x > 0$, this is $x/x = 1$. For $x < 0$, this is $-x/x = -1$. Approaching 0 from the right, the function heads toward $1$. Approaching from the left, it heads toward $-1$. There is no single value the function approaches at $0$. The two-sided limit does not exist. Each one-sided limit exists; they just don't match.
 
-for the left-hand limit (approach from below), and
+We write $\lim_{x \to 0^+} |x|/x = 1$ and $\lim_{x \to 0^-} |x|/x = -1$. The superscripts $+$ and $-$ mean "from the right" and "from the left." The two-sided limit $\lim_{x \to 0} |x|/x$ does not exist.
 
-$$\lim_{x \to a^+} f(x) = L_2$$
+The second kind of failure: the function blows up. The rational function $1/x$ near $x = 0$: from the right, the values are $1, 10, 100, 1000, \ldots$ as $x = 1, 0.1, 0.01, 0.001, \ldots$ The function grows without bound. We write
 
-for the right-hand limit (approach from above). The two-sided limit exists if and only if both one-sided limits exist *and are equal*.
+$$\lim_{x \to 0^+} \frac{1}{x} = \infty$$
 
-For the piecewise $g(x)$ above: $\lim_{x \to 1^-} g(x) = 2$, $\lim_{x \to 1^+} g(x) = 3$. Each one-sided limit exists; the two-sided limit does not.
+This notation is somewhat conventional. The limit does not "equal infinity" in the sense of taking a numerical value — infinity is not a number. The notation means the function grows without bound, and the $\infty$ symbol identifies *how* the limit fails.
 
-The *Heaviside step function* — $H(x) = 0$ for $x < 0$ and $H(x) = 1$ for $x \geq 0$ — is the canonical example. $\lim_{x \to 0^-} H(x) = 0$; $\lim_{x \to 0^+} H(x) = 1$. The two-sided limit at $x = 0$ does not exist. The function defines an instantaneous on/off switch at the origin.
+The Einstein equation does exactly this. $\lim_{v \to c^-} m_0 / \sqrt{1 - v^2/c^2} = \infty$. The mass grows without bound as speed approaches the speed of light. The limit "doesn't exist" in the strict sense; in the practical sense, you know exactly what's happening.
 
-*Infinite limits*. Sometimes a function grows without bound as $x$ approaches $a$. The textbook notation:
+The third kind of failure: oscillation. The function $\sin(1/x)$ near $x = 0$ oscillates infinitely often — as $x$ shrinks toward 0, the argument $1/x$ blows up, and the sine completes infinitely many full oscillations in any interval around 0, however small. The function doesn't settle on any value. Neither one-sided limit exists.
 
-$$\lim_{x \to a} f(x) = \infty$$
+These three failure modes — jump, blow-up, oscillation — cover most of what you encounter. When a limit fails, the question to ask is: which kind of failure is this?
 
-means that $f(x)$ grows arbitrarily large as $x$ approaches $a$. Strictly speaking, the limit *does not exist* (the value $\infty$ is not a number). The notation is a useful shorthand for *how* the limit fails — by blowing up rather than by oscillating or by disagreeing across sides. Similarly $\lim_{x \to a} f(x) = -\infty$ for unbounded negative growth.
+<!-- → [INFOGRAPHIC: three-panel side-by-side diagram of the three limit failure modes — panel 1: jump discontinuity (|x|/x), showing left and right arrows landing at different heights with gap labeled "sides disagree"; panel 2: blow-up (1/x), showing the curve shooting toward ±∞ with vertical asymptote labeled; panel 3: oscillation (sin(1/x)), showing increasingly rapid oscillation as x→0 with no settled value — each panel labels the failure type and the canonical example function] -->
 
-The Einstein equation from §2.1 is a perfect example. $\lim_{v \to c^-} m_0 / \sqrt{1 - v^2/c^2} = \infty$. The mass blows up as the speed approaches the speed of light from below.
+---
 
-*Limits at infinity*. The $x$ doesn't have to approach a finite value. We can ask what $f(x)$ does as $x$ grows without bound:
+## How to compute limits
 
-$$\lim_{x \to \infty} f(x) = L$$
+The intuitive idea is fine for understanding. Computing by numerical experiment is fine for guessing. Neither is fast or reliable enough for actual mathematics. The limit laws turn computation into algebra.
 
-means $f(x)$ approaches $L$ as $x$ grows arbitrarily large. For $f(x) = 1/x$, $\lim_{x \to \infty} 1/x = 0$. For $f(x) = (3x^2 + x)/(x^2 + 1)$, dividing numerator and denominator by $x^2$ gives $(3 + 1/x)/(1 + 1/x^2)$, which approaches $3/1 = 3$ as $x \to \infty$.
+The core laws say: if you know $\lim_{x \to a} f(x) = L$ and $\lim_{x \to a} g(x) = M$, then limits pass through sums, differences, products, quotients (when $M \neq 0$), and powers exactly as you'd hope:
 
-The four cases of "limit existence" worth keeping straight:
+$$\lim_{x \to a}[f(x) + g(x)] = L + M, \quad \lim_{x \to a}[f(x) \cdot g(x)] = L \cdot M, \quad \lim_{x \to a}\frac{f(x)}{g(x)} = \frac{L}{M} \text{ (if } M \neq 0\text{)}$$
 
-1. *Two-sided limit equals a finite number $L$.* Function approaches $L$ from both sides.
-2. *Two-sided limit is $\pm\infty$.* Function blows up. By strict definition, the limit "does not exist," but the notation captures the way it fails.
-3. *One-sided limits exist but disagree.* Two-sided limit does not exist; finite jump.
-4. *Function oscillates* (like $\sin(1/x)$ near $0$). Neither one-sided nor two-sided limit exists.
+These laws, combined with the trivial cases $\lim_{x \to a} c = c$ (a constant stays constant) and $\lim_{x \to a} x = a$ (the identity function approaches its target), let you evaluate the limit of any polynomial or rational function by simply substituting the target value — as long as the denominator doesn't vanish there.
 
-The trade-off in this taxonomy: separating "limit doesn't exist" into named subtypes (jumps, blow-ups, oscillations) buys *diagnostic specificity* (a jump is a different problem from a blow-up) at the cost of *more terminology to keep straight*. Most calculus problems in practice fall into case 1; the others are useful for classifying the failures.
+$$\lim_{x \to 3}(x^2 + 2x - 1) = 9 + 6 - 1 = 14$$
 
-A worked example. Find $\lim_{x \to 0} \frac{|x|}{x}$.
+Done. The function is "nice" at $x = 3$, so the limit equals the value.
 
-For $x > 0$: $|x| = x$, so $|x|/x = 1$. Right-hand limit is 1.
-For $x < 0$: $|x| = -x$, so $|x|/x = -1$. Left-hand limit is $-1$.
+The interesting problems are where substitution gives $0/0$. That form is indeterminate — it doesn't mean the limit is 0, or 1, or doesn't exist. It means the limit laws aren't immediately applicable and you need to do something first.
 
-The two sides disagree. The two-sided limit does not exist. (The function is the *sign function*, with a jump discontinuity at the origin.)
+**Factor and cancel.** This handles most polynomial cases. The example from the opening of this chapter: $\lim_{x \to 2}(x^2 - 4)/(x - 2)$. Substitution gives $0/0$. Factor: $(x^2 - 4) = (x-2)(x+2)$. Cancel the $(x-2)$ for $x \neq 2$. What remains: $\lim_{x \to 2}(x + 2) = 4$.
 
-## 2.4 Computing limits: the limit laws and the standard techniques
+**Multiply by a conjugate.** For expressions involving square roots, the algebraic identity $(a - b)(a + b) = a^2 - b^2$ often clears the indeterminate form. Example:
 
-The intuitive definition is fine for understanding, but slow for computing. The *limit laws* let you decompose limits algebraically.
+$$\lim_{x \to 0}\frac{\sqrt{x + 1} - 1}{x}$$
 
-If $\lim_{x \to a} f(x) = L$ and $\lim_{x \to a} g(x) = M$, then:
+Substitution gives $0/0$. Multiply numerator and denominator by $\sqrt{x+1}+1$:
 
-1. $\lim_{x \to a} [f(x) + g(x)] = L + M$ (sum)
-2. $\lim_{x \to a} [f(x) - g(x)] = L - M$ (difference)
-3. $\lim_{x \to a} [f(x) \cdot g(x)] = L \cdot M$ (product)
-4. $\lim_{x \to a} [f(x) / g(x)] = L/M$ provided $M \neq 0$ (quotient)
-5. $\lim_{x \to a} [c f(x)] = cL$ for any constant $c$ (scalar)
-6. $\lim_{x \to a} [f(x)]^n = L^n$ (power)
-7. $\lim_{x \to a} c = c$ (constant)
-8. $\lim_{x \to a} x = a$ (identity)
+$$\frac{\sqrt{x+1}-1}{x} \cdot \frac{\sqrt{x+1}+1}{\sqrt{x+1}+1} = \frac{(x+1) - 1}{x(\sqrt{x+1}+1)} = \frac{x}{x(\sqrt{x+1}+1)} = \frac{1}{\sqrt{x+1}+1}$$
 
-Combined, these laws say: limits commute with sums, differences, products, quotients (when the denominator's limit is nonzero), and integer powers. As long as nothing pathological happens, you can compute a complicated limit by computing simpler ones and combining.
+Now substitute: $\lim_{x \to 0} 1/(\sqrt{x+1}+1) = 1/2$.
 
-The first thing to try, always: *direct substitution*. If $f(x)$ is a polynomial, a rational function whose denominator doesn't vanish at $a$, or any combination of standard functions that's defined at $a$, the limit equals $f(a)$. For example,
+**The squeeze theorem.** When a function is trapped between two functions that converge on the same limit, it must share that limit. If $g(x) \leq f(x) \leq h(x)$ near $a$, and $\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L$, then $\lim_{x \to a} f(x) = L$.
 
-$$\lim_{x \to 3} (x^2 + 2x - 1) = 9 + 6 - 1 = 14$$
+The canonical application: $\lim_{x \to 0} x^2 \sin(1/x)$. The sine oscillates wildly — $\sin(1/x)$ doesn't have a limit at 0. But the whole expression is squeezed:
 
-Direct substitution works. The function is *continuous* at $x = 3$ — a concept §2.5 will pin down formally.
+$$-x^2 \leq x^2 \sin(1/x) \leq x^2$$
 
-Direct substitution fails when it produces an *indeterminate form* — most commonly $0/0$. The earlier example $\lim_{x \to 2} (x^2 - 4)/(x - 2)$ direct-substitutes to $0/0$, which gives no information. The technique to apply: *factor and cancel*. $(x^2 - 4)/(x-2) = (x-2)(x+2)/(x-2)$, and for $x \neq 2$ this equals $x + 2$. Now substitute: $\lim_{x \to 2} (x + 2) = 4$.
+Both bounds approach 0 as $x \to 0$. The expression in the middle, whatever it's doing, can't escape. Its limit is 0.
 
-Three standard techniques handle most $0/0$ indeterminates.
+The squeeze theorem's elegance is that it never needs to look at the complicated function directly. You only need to bound it above and below by something tractable.
 
-*Factor and cancel*, as above. Usually the first move when the indeterminate involves polynomials.
+<!-- → [IMAGE: graph illustrating the squeeze theorem for x²sin(1/x) — plot the three curves y = x², y = −x², and y = x²sin(1/x) on the same axes near x = 0; shade the region between the two parabolas; label the "squeezed" function and the two bounding functions; mark the shared limit at (0, 0) with a dot — student should immediately see that the oscillating function cannot escape the narrowing envelope] -->
 
-*Multiply by a conjugate*. For limits involving radicals, multiplying numerator and denominator by the conjugate often clears the indeterminate. Example: $\lim_{x \to 0} (\sqrt{x+1} - 1)/x$. Direct substitution gives $0/0$. Multiply top and bottom by $\sqrt{x+1} + 1$:
+---
 
-$$\frac{\sqrt{x+1} - 1}{x} \cdot \frac{\sqrt{x+1} + 1}{\sqrt{x+1} + 1} = \frac{(x+1) - 1}{x(\sqrt{x+1}+1)} = \frac{x}{x(\sqrt{x+1}+1)} = \frac{1}{\sqrt{x+1}+1}$$
+## Continuity
 
-Now substitute: $\lim_{x \to 0} 1/(\sqrt{x+1}+1) = 1/(1+1) = 1/2$.
+A function is *continuous at a point $a$* if three conditions hold simultaneously: $f(a)$ is defined; the limit $\lim_{x \to a} f(x)$ exists; and the limit equals $f(a)$. In practice: the function has no holes, jumps, or blowups at $a$.
 
-*The squeeze theorem*. If $g(x) \leq f(x) \leq h(x)$ near $a$, and $\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L$, then $\lim_{x \to a} f(x) = L$. The function is "squeezed" between two functions that both approach $L$. The classic application: $\lim_{x \to 0} x^2 \sin(1/x)$. The sine factor oscillates between $-1$ and $1$; the $x^2$ factor goes to 0. So $-x^2 \leq x^2 \sin(1/x) \leq x^2$, and both bounds approach 0 as $x \to 0$. The squeeze gives $\lim_{x \to 0} x^2 \sin(1/x) = 0$. Direct substitution would give "0 times an undefined value" — the squeeze theorem is the rigorous workaround.
+All three conditions matter. You can have a function defined at $a$ but with a limit that doesn't exist (a jump). You can have a limit that exists but the function undefined at $a$ (a hole). You can have both defined and existent but disagreeing (a weird patch). Continuity is all three at once.
 
-The trade-off in the limit laws: they buy *systematic computability* (any standard limit can be evaluated by mechanical rules) at the cost of *not handling indeterminate forms directly* (when substitution gives 0/0 or $\infty/\infty$, you need additional algebraic manipulation). Most of a first-year calculus student's limit-evaluation practice is in recognizing which technique disposes of which indeterminate.
+The failures have names.
 
-## 2.5 Continuity and the Intermediate Value Theorem
+A *removable discontinuity* is a hole: the limit exists, but the function value either doesn't exist or doesn't match. The function $f(x) = (x^2-4)/(x-2)$ has a removable discontinuity at $x = 2$. The limit is 4; the function is undefined. If you define $f(2) = 4$, the discontinuity vanishes — you "removed" it by patching in the right value.
 
-A function $f$ is *continuous at $a$* if three conditions hold:
+A *jump discontinuity* is a genuine break: the one-sided limits exist but differ. No redefinition of the function value at the jump fixes it, because the left and right sides land in different places.
 
-1. $f(a)$ is defined.
-2. $\lim_{x \to a} f(x)$ exists.
-3. $\lim_{x \to a} f(x) = f(a)$.
+An *infinite discontinuity* is a blowup: the function grows without bound near the point. $1/x$ at $x = 0$.
 
-In words: the function is defined at $a$, has a limit at $a$, and the limit equals the function value. All three pieces are required. Removing any one of them gives a *discontinuity*.
+<!-- → [INFOGRAPHIC: three-panel comparison of discontinuity types — panel 1: removable discontinuity showing a continuous-looking curve with a single open hole and a separate filled dot nearby (or none), labeled "limit exists, value missing or mismatched — patchable"; panel 2: jump discontinuity showing two separate curve segments ending at different heights at the same x-value, labeled "one-sided limits exist but disagree — not patchable"; panel 3: infinite discontinuity showing a vertical asymptote with curves shooting to ±∞, labeled "function unbounded — not patchable"; include a small example function under each panel] -->
 
-Three flavors of discontinuity:
+Continuity is the condition that makes direct substitution valid as a limit-evaluation technique. When a function is continuous at $a$, $\lim_{x \to a} f(x) = f(a)$ by definition — that's what continuity means. So every time you substitute and compute a limit, you're implicitly invoking continuity. The first move in any limit problem — try substituting — is really asking whether the function is continuous at the target.
 
-*Removable discontinuity*. The limit exists, but $f(a)$ is undefined or doesn't match the limit. Example: $f(x) = (x^2 - 4)/(x - 2)$ from §2.2 has a removable discontinuity at $x = 2$. The limit is 4; the value is undefined. We could *redefine* $f(2) = 4$ and the new function would be continuous. The discontinuity is "removable" because patching the value fixes it.
+Polynomials are continuous everywhere. Rational functions are continuous wherever their denominator is nonzero. Trigonometric functions $\sin x$ and $\cos x$ are continuous everywhere. Exponential functions are continuous everywhere. These are the functions you work with most often, and on their natural domains they never have discontinuities.
 
-*Jump discontinuity*. The one-sided limits exist but disagree. The Heaviside step function from §2.3 has a jump discontinuity at the origin. No redefinition of $f(0)$ can make the function continuous because the limits from the two sides land at different values.
+---
 
-*Infinite discontinuity*. The function blows up at $a$. Example: $f(x) = 1/x$ at $x = 0$. The function approaches $-\infty$ from the left and $+\infty$ from the right. Not patchable.
+## The Intermediate Value Theorem
 
-A function is *continuous on an interval* if it is continuous at every point of the interval. All polynomials are continuous everywhere. Rational functions are continuous everywhere except where the denominator vanishes. Trigonometric functions $\sin x$ and $\cos x$ are continuous everywhere; $\tan x$ is continuous except at the points where $\cos x = 0$ ($\pi/2 + k\pi$ for integer $k$). Exponential functions $b^x$ are continuous everywhere; logarithmic functions $\log_b x$ are continuous on $(0, \infty)$.
+Here is something a continuous function cannot do: jump from one height to another without passing through the heights in between.
 
-Continuity is the property that lets *direct substitution* compute limits. If $f$ is continuous at $a$, then $\lim_{x \to a} f(x) = f(a)$. The first move in any limit problem — substitute and see what happens — is asking implicitly whether the function is continuous at the target point.
+The *Intermediate Value Theorem* makes this precise. If $f$ is continuous on the closed interval $[a, b]$, and $N$ is any number strictly between $f(a)$ and $f(b)$, then there is some $c$ in $[a, b]$ with $f(c) = N$.
 
-The big theorem about continuity is the *Intermediate Value Theorem* (IVT): if $f$ is continuous on a closed interval $[a, b]$, and $N$ is any number between $f(a)$ and $f(b)$, then there exists at least one $c$ in $[a, b]$ with $f(c) = N$.
+The proof idea is topological — it follows from the completeness of the real line — but the content is geometric: a continuous graph can't get from height $f(a)$ to height $f(b)$ without drawing a connected curve, and a connected curve passes through every intermediate height.
 
-Stated geometrically: a continuous function whose graph crosses from one height to another must pass through every intermediate height somewhere. There can be no jumps. The IVT is the formalization of the intuitive idea that "you can't get from here to there without passing through the points in between" — provided your path is continuous.
+<!-- → [IMAGE: IVT diagram — plot a smooth continuous curve from point (a, f(a)) to point (b, f(b)) on a closed interval; draw a horizontal dashed line at height N (strictly between the two endpoint values); mark the intersection point c on the x-axis with a vertical dotted line; label f(a), f(b), N, a, b, and c clearly — the visual argument is that the curve must cross the horizontal line at least once, and the diagram should make this feel obvious without needing words] -->
 
-A worked example. Show that $f(x) = x^3 - x - 1$ has a real root between $x = 1$ and $x = 2$.
+The practical consequence: if you can evaluate a function at two points and one value is negative and the other is positive, there must be a root somewhere between them. You don't know where. But it exists.
 
-$f(1) = 1 - 1 - 1 = -1$.
-$f(2) = 8 - 2 - 1 = 5$.
+Example: show that $f(x) = x^3 - x - 1$ has a real root between $x = 1$ and $x = 2$.
 
-$f$ is a polynomial, hence continuous on $[1, 2]$. The IVT applied to $N = 0$, which lies between $-1$ and $5$, guarantees that some $c$ in $[1, 2]$ has $f(c) = 0$. We don't know what $c$ is exactly, but we know it exists. Numerical methods (bisection, Newton's method) can locate $c$ to any desired precision; the IVT just guarantees it's there.
+$f(1) = 1 - 1 - 1 = -1$. Negative.
+$f(2) = 8 - 2 - 1 = 5$. Positive.
 
-The trade-off in the IVT: it buys *existence proofs* (we can show solutions exist before we know how to find them) at the cost of *not telling us what the solution is*. The IVT is the most common tool for proving that an equation has a solution; algebra and numerical methods are then needed to find that solution.
+$f$ is a polynomial, so it's continuous on $[1, 2]$. Since $f(1) < 0 < f(2)$, the IVT guarantees some $c$ in $[1, 2]$ with $f(c) = 0$. The root exists. Where exactly? You'd need numerical methods to pin it down. The IVT only guarantees existence — it says nothing about uniqueness or location.
 
-A second consequence of continuity, useful for limits. If $f$ and $g$ are continuous at $a$, so is any polynomial combination of them — sums, products, quotients (where defined), compositions. This is what powers the limit laws of §2.4: when you decompose a complicated limit into simpler ones using the laws, you're implicitly using the fact that the operations preserve continuity for the standard families.
+This is the IVT's defining trade-off: it gives existence proofs for free, in exchange for telling you nothing about the solution itself. It's a blunt instrument that answers the question "is there a solution?" before you know how to find one.
 
-## 2.6 The precise $\epsilon$-$\delta$ definition
+---
 
-The intuitive definition of §2.2 is enough for most calculus practice. It is not enough for *proof*. Mathematicians spent the better part of two centuries — from Newton and Leibniz in the 1670s to Cauchy and Weierstrass in the 1820s and 1860s — getting to a definition rigorous enough to do mathematics with. The result is the $\epsilon$-$\delta$ ("epsilon-delta") definition.
+## The precise definition
 
-*Definition*: $\lim_{x \to a} f(x) = L$ means that for every number $\epsilon > 0$, there exists a number $\delta > 0$ such that for all $x$ with $0 < |x - a| < \delta$, we have $|f(x) - L| < \epsilon$.
+The intuitive definition of a limit — "the function approaches $L$ as $x$ approaches $a$" — is useful for reasoning and computing. It is not rigorous enough for proofs. The word "approaches" is doing a lot of work and carrying a lot of ambiguity.
 
-In words. Pick any tolerance $\epsilon$ on the output side — however small. The limit statement says we can find a tolerance $\delta$ on the input side such that whenever $x$ is within $\delta$ of $a$ (but not equal to $a$ — that's what the strict $0 < |x - a|$ inequality ensures), the function value $f(x)$ is within $\epsilon$ of $L$.
+Weierstrass gave the precise version. We say $\lim_{x \to a} f(x) = L$ if: for every $\epsilon > 0$, there exists $\delta > 0$ such that whenever $0 < |x - a| < \delta$, it follows that $|f(x) - L| < \epsilon$.
 
-The structure is a quantifier challenge: for *every* $\epsilon$, there *exists* a $\delta$. To prove a limit equals $L$, you have to provide a recipe for finding a working $\delta$ given any $\epsilon$.
+Parse the structure. $\epsilon$ is a tolerance on the output — how close to $L$ you want $f(x)$ to be. $\delta$ is a tolerance on the input — how close to $a$ you'll keep $x$. The statement says: whatever output tolerance your opponent demands, you can always find an input tolerance that delivers it. The limit equals $L$ if you can always win this game, no matter how tight the output tolerance.
 
-A worked $\epsilon$-$\delta$ proof. Show that $\lim_{x \to 3} (2x + 1) = 7$.
+The condition $0 < |x - a|$ is the "$x$ but not equal to $a$" clause — limits are about behavior near $a$, not at $a$.
 
-We need to show: for every $\epsilon > 0$, there exists $\delta > 0$ such that $0 < |x - 3| < \delta$ implies $|(2x + 1) - 7| < \epsilon$.
+<!-- → [IMAGE: ε-δ diagram — plot a generic smooth function f(x) near x = a; draw a horizontal band of width 2ε centered on L (the target output value) and a vertical band of width 2δ centered on a (the target input value); shade the region where both bands overlap; mark the point (a, L) with an open circle (since f(a) need not equal L); draw arrows showing that any x within distance δ of a (but not equal to a) maps to an f(x) within distance ε of L — the student should see the "tolerance game" visually: tighten ε, narrow δ to match] -->
 
-Simplify the conclusion: $|(2x + 1) - 7| = |2x - 6| = 2|x - 3|$.
+A worked proof. Show $\lim_{x \to 3}(2x + 1) = 7$.
 
-So we need $2|x - 3| < \epsilon$, i.e., $|x - 3| < \epsilon/2$.
+We need: for every $\epsilon > 0$, find $\delta > 0$ such that $0 < |x - 3| < \delta$ implies $|(2x+1) - 7| < \epsilon$.
 
-Choose $\delta = \epsilon/2$. Then if $0 < |x - 3| < \delta = \epsilon/2$, we have $|(2x+1) - 7| = 2|x - 3| < 2 \cdot \epsilon/2 = \epsilon$. ✓
+Simplify the conclusion: $|(2x+1) - 7| = |2x - 6| = 2|x - 3|$.
 
-The proof works for every $\epsilon$, with the explicit recipe $\delta = \epsilon/2$.
+So we need $2|x - 3| < \epsilon$, which means $|x - 3| < \epsilon/2$.
 
-For more complicated functions the algebra gets harder, but the pattern is the same. Pick an arbitrary $\epsilon$. Manipulate the inequality $|f(x) - L| < \epsilon$ to express it as a constraint on $|x - a|$. Read off the $\delta$ that works.
+Choose $\delta = \epsilon/2$. Then if $0 < |x - 3| < \delta$, we have $|(2x+1) - 7| = 2|x-3| < 2 \cdot \epsilon/2 = \epsilon$. ✓
 
-The trade-off in the $\epsilon$-$\delta$ definition: it buys *mathematical rigor* (limit statements can now be proven, not just inferred) at the cost of *substantial notational and conceptual overhead*. Most introductory calculus courses introduce the definition for completeness and use it sparingly afterward. The intuitive definition does most of the day-to-day work. Real analysis — typically a year-three or year-four math course — develops the $\epsilon$-$\delta$ machinery in full.
+The recipe: manipulate the desired output inequality until it becomes a constraint on $|x - a|$, then read off the $\delta$. For linear functions this is one line of algebra. For more complicated functions it can require careful bounding — but the structure is always the same.
 
-## 2.7 Synthesis: closing the speed-of-light loop
+The $\epsilon$-$\delta$ definition is rarely used in introductory calculus practice. It becomes essential in real analysis, where you need to prove theorems about limits rather than compute them. Most of the working of this course happens at the intuitive level; the formal definition sits beneath it as the thing that justifies everything.
 
-Return to the Einstein equation from §2.1:
+---
+
+## Closing the loop
+
+The Einstein equation is the full chapter in a single expression.
 
 $$m(v) = \frac{m_0}{\sqrt{1 - v^2/c^2}}$$
 
-Apply the chapter's full machinery. As $v \to c^-$ (approaching the speed of light from below), the denominator $\sqrt{1 - v^2/c^2}$ approaches $\sqrt{1 - 1} = 0$. The numerator $m_0$ is constant. The function blows up:
+The domain is the open interval $(-c, c)$ — for $|v| \geq c$, either the denominator vanishes or the radicand becomes negative, and neither has a physical or mathematical interpretation. On the open domain, the function is continuous: denominator is everywhere positive, and the composition of continuous operations preserves continuity.
 
-$$\lim_{v \to c^-} m(v) = \infty$$
+At the right endpoint: $\lim_{v \to c^-} m(v) = \infty$. An infinite one-sided limit — the blowup kind of failure. The limit doesn't exist; the notation captures how it fails.
 
-This is an infinite one-sided limit — the limit does not exist in the strict sense, but the notation captures the way it fails: by unbounded growth.
+The IVT applies on any closed sub-interval. Between $v = 0$ (mass $= m_0$) and $v = 0.99c$ (mass $\approx 7.1 m_0$), the function is continuous and passes through every intermediate value. There is some $v$ at which the moving mass equals exactly $2m_0$, some other $v$ at which it equals $3m_0$, some other at $5m_0$. Each exists. Algebra finds them; IVT just guarantees they're there.
 
-The function is *not defined* at $v = c$ (denominator zero). It is also not defined for $v > c$ (the radicand becomes negative; we take the convention that real masses don't allow imaginary values). The natural domain is $-c < v < c$ — the function lives in the open interval between $-c$ and $c$, with infinite asymptotes at both endpoints. On the open domain, the function is continuous everywhere, since the denominator is positive throughout and the radical, division, and constant operations preserve continuity.
+This is what limits actually are — not a detour, not an abstraction for its own sake. They're the language for describing behavior near a point without making a claim about the point itself. The derivative, the integral, infinite series — every central object in calculus is a limit. The machinery in this chapter is the machinery of all the chapters that follow.
 
-The Intermediate Value Theorem applies on any closed sub-interval: between $v = 0$ (where $m = m_0$) and $v = 0.99c$ (where $m \approx 7.1 m_0$), the function takes every intermediate mass value. There exists some $v$ between 0 and $0.99c$ at which the moving mass equals exactly $2 m_0$, $3 m_0$, $5 m_0$ — anything up to the upper bound. Numerical solution gives those $v$ values; the IVT just guarantees they exist.
+The one idea to carry forward: you can approach a point without reaching it, and that approach can have a perfectly definite, computable value even if the function at the point is undefined, or wrong, or blowing up. The limit exists in the behavior near $a$, not in the behavior at $a$. Almost everything that makes calculus work depends on this distinction staying clear.
 
-Why does any of this matter beyond physics? Because the structural pattern recurs throughout calculus. A physical or geometric setup produces a function. Limits identify where the function is continuous, where it has asymptotes, where it has discontinuities. Continuity allows the IVT and direct substitution. Limit techniques handle the points where direct substitution fails.
+---
 
-The ground we've covered:
+## LLM Exercises
 
-- Functions can be analyzed for their behavior near a point (the limit), independent of what they do at the point.
-- Limits combine through limit laws when nothing pathological happens.
-- Indeterminate forms (0/0, $\infty/\infty$) require algebraic manipulation — factoring, conjugates, the squeeze theorem.
-- Continuity is the formal version of "no jumps, no holes, no blow-ups" — the property that lets direct substitution compute limits.
-- The Intermediate Value Theorem turns continuity into existence proofs.
-- The $\epsilon$-$\delta$ definition turns limit statements into provable assertions.
+The following exercises are designed for working interactively with an AI assistant. For each, the productive move is not to ask for the answer directly — it's to reason aloud, explain your thinking, and ask the AI to identify errors or push back on your reasoning.
 
-This is the foundational chapter of calculus. The derivative and the integral, both of which arrive in the next chapters, are themselves limits. Without the limit concept solid, neither makes sense.
+1. **Reconstruct the Einstein limit from scratch.** Without looking at the chapter, walk the AI through why $\lim_{v \to c^-} m_0/\sqrt{1-v^2/c^2} = \infty$. Ask it to challenge every step. If it agrees too quickly, prompt it: "Is there anything imprecise or missing in what I said?"
 
-## 2.8 Exercises
+2. **Construct your own $0/0$ example.** Build a rational function with a removable discontinuity at $x = 5$. Tell the AI what you built and why you expect the limit to exist. Ask it to verify your factoring and suggest a harder variant.
 
-### Warm-up
+3. **The squeeze theorem, explained.** Explain the squeeze theorem to the AI as if it has never heard of it — motivate it from scratch, give the formal statement, and walk through the $x^2\sin(1/x)$ example. Ask the AI where your explanation would confuse a student seeing this for the first time.
 
-1. **Use the intuitive definition to argue what** $\lim_{x \to 3} (x^2 - 9)/(x - 3)$ **should be.** Verify by factoring.
+4. **IVT as detective work.** Give the AI a function and an interval and ask it to confirm whether the IVT applies. Then ask it: what could go wrong if the continuity condition were dropped? Push until you can construct a discontinuous function that crosses zero on an interval but has no root — and explain why it doesn't contradict the IVT.
 
-2. **For the function** $f(x) = |x|/x$, **state the left-hand limit, the right-hand limit, and the two-sided limit at** $x = 0$.
-
-3. **State the three conditions a function must satisfy to be continuous at a point** $a$.
-
-### Application
-
-4. **Evaluate by direct substitution where possible; otherwise, apply factoring or conjugates:** (a) $\lim_{x \to 4} (x^2 + 2x - 1)$; (b) $\lim_{x \to 1} (x^2 - 1)/(x - 1)$; (c) $\lim_{x \to 0} (\sqrt{x + 4} - 2)/x$; (d) $\lim_{x \to 2} (x^3 - 8)/(x - 2)$.
-
-5. **Apply the squeeze theorem to evaluate** $\lim_{x \to 0} x^2 \cos(1/x)$.
-
-6. **Identify all points of discontinuity of** $f(x) = (x^2 - 1)/((x-1)(x+2))$, **and classify each as removable, jump, or infinite.**
-
-### Synthesis
-
-7. **Show using the IVT that** $f(x) = x^5 + 2x - 1$ **has a real root in the interval** $[0, 1]$.
-
-8. **Compute** $\lim_{x \to \infty} (3x^2 + 2x + 1)/(x^2 - 4)$. **Then compute** $\lim_{x \to \infty} (3x + 2x + 1)/(x^2 - 4)$ (note the change in numerator's leading term). **Discuss why the two answers differ.**
-
-### Challenge
-
-9. **Use the** $\epsilon$**-**$\delta$ **definition to prove** $\lim_{x \to 2} (3x - 1) = 5$. **Provide an explicit** $\delta(\epsilon)$.
-
-10. **Returning to Einstein's equation** $m = m_0 / \sqrt{1 - v^2/c^2}$, **find the speed** $v$ **at which the moving mass equals exactly** $10 m_0$. **Express the answer as a fraction of** $c$, **and compute it numerically.** Then discuss what the IVT lets us conclude about the existence of such a $v$ before we computed it.
-
-## 2.9 Chapter summary
-
-You walked into this chapter with functions but no formal way to talk about behavior near a point. You walk out with the foundational concept of calculus.
-
-A *limit* is the value a function approaches as the input approaches a target — a question about behavior near a point, independent of what the function does at the point. Limits exist when the function approaches the same value from both sides. They fail in named ways: jumps (one-sided limits disagree), blow-ups (function grows without bound), oscillations (function doesn't settle on any value).
-
-The *limit laws* let limits be computed by decomposition — sums, differences, products, quotients, powers. *Direct substitution* works when the function is continuous at the target. When substitution gives an indeterminate form (0/0, $\infty/\infty$), algebraic techniques — factoring, conjugates, the squeeze theorem — typically resolve it.
-
-*Continuity* is the property that direct substitution computes a limit correctly: $\lim_{x \to a} f(x) = f(a)$, with $f$ defined at $a$ and the limit equal to the value. The standard families — polynomials, rational functions on their domains, trig functions, exponentials, logs — are all continuous on their natural domains.
-
-The *Intermediate Value Theorem* turns continuity into an existence claim: a continuous function that crosses from one height to another must pass through every intermediate height somewhere. This is the most common tool for proving solutions exist.
-
-The $\epsilon$-$\delta$ definition gives the precise version of "approaches" — for every output tolerance $\epsilon$, there exists an input tolerance $\delta$ such that inputs within $\delta$ of $a$ produce outputs within $\epsilon$ of $L$. Most calculus practice uses the intuitive definition; rigorous proof requires the formal one.
-
-The single most important idea: calculus does not directly compute *values* of functions. It computes *limits* — what functions approach. Every later chapter is going to define an operation (differentiation, integration, summing infinite series) as a limit. If "limit" stays solid, the rest of the course follows.
-
-The common mistake to watch for: confusing $\lim_{x \to a} f(x)$ with $f(a)$. They can be different — the function might be undefined at $a$, or defined and equal to something other than the limit, or defined and equal to the limit. Continuity is the special case where the limit and the value coincide. Most interesting limit problems involve points where they don't.
-
-## 2.10 Connections forward
-
-Chapter 3 introduces the *derivative* — the rate of change of a function at a point. The derivative is itself a limit:
-
-$$f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}$$
-
-The expression $(f(x+h) - f(x))/h$ is the average rate of change of $f$ over an interval of width $h$. As $h$ shrinks to zero, the average rate becomes the *instantaneous* rate of change. The chapter you just finished — limits, indeterminate forms, the squeeze theorem, continuity — is precisely the toolkit needed to compute and reason about that limit. By the end of Chapter 3 you will have the derivative in hand for all the standard functions you met in Chapter 1, and a set of differentiation rules that let you handle compositions and combinations of them.
+5. **Write an $\epsilon$-$\delta$ proof, narrated.** Attempt the proof that $\lim_{x \to 2}(5x - 3) = 7$. Write out every step with a sentence explaining what you're doing and why. Submit it to the AI and ask: "Where is the logic weakest? What would a grader mark down?"
